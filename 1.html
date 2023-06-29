@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r127/three.min.js"></script>
+</head>
+<body>
+    <canvas></canvas>
+</body>
+<script type="text/javascript">
+    let scene = new THREE.Scene(); // creating scene
+    let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); 
+    // making camera(verical view field, aspact ration or horizontal field of view, near, far)
+    let canvas = document.querySelector("canvas");
+    let renderer = new THREE.WebGLRenderer(); // rendering ,we can add canvas as ({canvas})
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    document.body.appendChild(renderer.domElement); // displaying in body
+
+    //creating shapes
+    let geometry = new THREE.BoxGeometry(1, 1, 1);
+
+    //creating material and color
+    let material = new THREE.MeshBasicMaterial({color: 0xffffff ,wireframe: true}) // if false it will be a surface, if true it will be wire
+
+    let cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    camera.position.z = 3;
+    //update scene
+    function update(){
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.005;
+    }
+
+    //draw scene
+    function render(){
+        renderer.render(scene, camera);
+    }
+
+    //make loop
+    function loop(){
+        requestAnimationFrame(loop);
+        update()
+        render();
+    }
+    loop();
+</script>
+</html>
